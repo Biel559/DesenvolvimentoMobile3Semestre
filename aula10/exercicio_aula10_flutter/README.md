@@ -1,4 +1,4 @@
-# appaula10_ex
+# exercicio_aula10_flutter
 
 A new Flutter project.
 
