@@ -18,34 +18,11 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Drawer propriedade do Scaffold que permite criar um elemento lateral
-      drawer: Drawer(
-        child: ListView(
-          // adicionando espaçamento com o padding
-          padding: EdgeInsets.zero,
-          // children pois utilizaremos mais de um widget
-          children: [
-            // Widget DrawerHeader vamos colocar o titulo do Drawer
-            DrawerHeader(
-                decoration: BoxDecoration(color: Colors.brown),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(color: Colors.white),
-                )),
-            ListTile(
-              title: Text('Opção 1'),
-            ),
-            ListTile(
-              title: Text('Opção 2'),
-            )
-          ],
-        ),
-      ),
       // criando o appbar
 
       appBar: AppBar(
         // atribuindo cor ao appbar
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFF024785),
         elevation: 5,
         iconTheme: IconThemeData(color: Colors.white),
         // centraliza o titulo do aplicativo
@@ -59,7 +36,7 @@ class DashboardScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(12),
               child: Text(
-                'App Agro IoT',
+                'TerraByte AgroSolution',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
@@ -132,7 +109,7 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         selectedItemColor: Colors.white,
-        backgroundColor: Colors.red[900],
+        backgroundColor: Color(0xFF024785),
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
@@ -170,7 +147,7 @@ class _DashboardButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: Colors.brown,
+                color: Color(0xFF6DBD29),
                 size: 40,
               ),
               SizedBox(
@@ -178,7 +155,7 @@ class _DashboardButton extends StatelessWidget {
               ),
               Text(
                 label,
-                style: TextStyle(fontSize: 18, color: Colors.brown),
+                style: TextStyle(fontSize: 18, color: Color(0xFF6DBD29)),
               )
             ],
           ),

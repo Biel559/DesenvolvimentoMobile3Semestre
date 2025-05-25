@@ -10,40 +10,40 @@ class Telaacionamento extends StatefulWidget {
 }
 
 class _TelaacionamentoState extends State<Telaacionamento> {
+  @override
+  void initState() {
+    super.initState();
+    _leitura();
+  }
+
   final bool status = false;
   Color status_cor = Colors.red;
-   int? temperatura;
+  int? temperatura;
   int? umidade;
   int? bomba;
   int? sensorUmidSolo;
- int? pH;
-  
-  Future<void> _leitura()async{
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/dados'));
-    print(response.body);
+  int? pH;
+
+  bool _bombaLigada = false; // 👈 Controle do GIF animado/parado
+
+  Future<void> _leitura() async {
+    final response = await http.get(Uri.parse(
+        'https://apiintegradorterceirosemestre-production.up.railway.app/dados'));
     final dados = json.decode(response.body);
     setState(() {
-      temperatura=(dados["temperatura"]);
-      umidade = (dados["umidade"]);
-      sensorUmidSolo = (dados["sensor_umidsolo"]);
-      pH = (dados["pH"]);
-      bomba= dados["bomba"];
-      print(temperatura);
-      print(umidade);
-      print(sensorUmidSolo);
-      print(pH);
-      print(bomba);
+      temperatura = dados["temperatura"];
+      umidade = dados["umidade"];
+      sensorUmidSolo = dados["sensor_umidsolo"];
+      pH = dados["pH"];
+      bomba = dados["bomba"];
     });
-   
   }
 
-  
-  
-
-Future<void> _ligarBomba() async {
+  Future<void> _ligarBomba() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/bomba'),
+        Uri.parse(
+            'https://apiintegradorterceirosemestre-production.up.railway.app/bomba'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'estado': 1}),
       );
@@ -51,6 +51,7 @@ Future<void> _ligarBomba() async {
       if (response.statusCode == 200) {
         setState(() {
           status_cor = Colors.green;
+          _bombaLigada = true; // 👈 Ligar GIF
         });
         print("Bomba ligada com sucesso!");
       } else {
@@ -61,11 +62,11 @@ Future<void> _ligarBomba() async {
     }
   }
 
-
   Future<void> _desligarBomba() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/bomba'),
+        Uri.parse(
+            'https://apiintegradorterceirosemestre-production.up.railway.app/bomba'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'estado': 0}),
       );
@@ -73,90 +74,145 @@ Future<void> _ligarBomba() async {
       if (response.statusCode == 200) {
         setState(() {
           status_cor = Colors.red;
+          _bombaLigada = false; // 👈 Parar GIF
         });
         print("Bomba desligada com sucesso!");
       } else {
-        print("Erro ao ligar a bomba: ${response.statusCode}");
+        print("Erro ao desligar a bomba: ${response.statusCode}");
       }
     } catch (e) {
       print("Erro na requisição: $e");
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFEAF5EE),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.brown,
-            ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF024785),
           ),
-          title: Text(
-            'Acionamento',
-            style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
         ),
-        // Widget novo Listview.builder
-        body: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 200,
-                  height: 200,
-                  color: status_cor,
-                  child: Text(
-                    "Bomba de irrigação",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+        title: Text(
+          'Acionamento',
+          style:
+              TextStyle(color: Color(0xFF024785), fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                alignment: Alignment.center,
+                width: 400,
+                height: 150,
+                color: status_cor,
+                child: Text(
+                  "Bomba de irrigação",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.brown,
-                      foregroundColor: Colors.white),
-                  onPressed: _ligarBomba,
-                  child: Text('Ligar bomba'),
-                ),
+            ),
+            // 👇 Aqui entra o GIF com controle
+            Container(
+              height: 200,
+              width: 300,
+              child: Image.asset(
+                _bombaLigada
+                    ? 'images/waterpump.gif'
+                    : 'images/waterpump_still.jpg',
+                gaplessPlayback: true,
+                fit: BoxFit.contain,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.brown,
-                      foregroundColor: Colors.white),
-                  onPressed: _desligarBomba,
-                  child: Text('Desligar bomba'),
-                ),
+            ),
+            SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF024785),
+                    foregroundColor: Colors.white),
+                onPressed: _ligarBomba,
+                child: Text('Ligar bomba'),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.brown,
-                      foregroundColor: Colors.white),
-                  onPressed: _leitura,
-                  child: Text('Leitura'),
-                ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF024785),
+                    foregroundColor: Colors.white),
+                onPressed: _desligarBomba,
+                child: Text('Desligar bomba'),
               ),
-            ],
-          ),
-        ));
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF024785),
+                    foregroundColor: Colors.white),
+                onPressed: _leitura,
+                child: Text('Leitura'),
+              ),
+            ),
+            Text(
+              "Temperatura: ${temperatura}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "Umidade: ${umidade}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "Sensor umidade solo: ${sensorUmidSolo}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "pH: ${pH}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            Container(
+              width: 320,
+              height: 220,
+              color: Color(0xFF024785),
+              alignment: Alignment.center,
+              child: Image.asset(
+                'images/senai2.png',
+                width: 300,
+                height: 200,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -39,27 +39,27 @@ class _ColetaDadosScreenState extends State<ColetaDadosScreen> {
         value: '80%',
         status: 'Bom',
         statusColor: Colors.blue,
-        imagePath: 'images/1.png'),
+        imagePath: 'images/1.jpg'),
 
     SensorData(
         title: 'Temperatura',
         value: '25 ºC',
         status: 'Bom',
         statusColor: Colors.blue,
-        imagePath: 'images/2.png'),
+        imagePath: 'images/2.jpg'),
     SensorData(
         title: 'Luminosidade',
         value: '80%',
         status: 'Bom',
         statusColor: Colors.blue,
-        imagePath: 'images/3.png'),
+        imagePath: 'images/3.jpg'),
 
     SensorData(
         title: 'Niveis de ph',
         value: '2',
         status: 'Ruim',
         statusColor: Colors.red,
-        imagePath: 'images/4.png'),
+        imagePath: 'images/4.jpg'),
   ];
 
   @override
@@ -73,12 +73,12 @@ class _ColetaDadosScreenState extends State<ColetaDadosScreen> {
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.brown,
+            color: Color(0xFF024785),
           ),
         ),
         title: Text(
           'Monitoramento',
-          style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Color(0xFF024785), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
