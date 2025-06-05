@@ -172,41 +172,41 @@ class _TelaacionamentoState extends State<Telaacionamento> {
             Text(
               "Temperatura: ${temperatura}",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               "Umidade: ${umidade}",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               "Sensor umidade solo: ${sensorUmidSolo}",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               "pH: ${pH}",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 16),
             Container(
-              width: 320,
-              height: 220,
+              width: 150,
+              height: 75,
               color: Color(0xFF024785),
               alignment: Alignment.center,
               child: Image.asset(
                 'images/senai2.png',
-                width: 300,
-                height: 200,
+                width: 500,
+                height: 500,
                 fit: BoxFit.contain,
               ),
             ),

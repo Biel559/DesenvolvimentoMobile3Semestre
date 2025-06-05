@@ -1,51 +1,45 @@
-
 import 'package:app_projint/screens/tela2.dart';
 import 'package:app_projint/screens/tela3.dart';
 import 'package:app_projint/screens/tela4.dart';
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: DashboardScreen(),
+    home: Home(), 
   ));
 }
 
-// cria uma classe do tipo Stateless
+// Mantém o DashboardScreen como está, sem alterações!
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-  // polimorfismo que permite tratar as funções de forma particular
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // criando o appbar
-
       appBar: AppBar(
-        // atribuindo cor ao appbar
         backgroundColor: Color(0xFF024785),
         elevation: 5,
         iconTheme: IconThemeData(color: Colors.white),
-        // centraliza o titulo do aplicativo
         centerTitle: true,
         title: Row(
           children: [
             Image.asset(
               'images/senai.png',
-              height: 40,
+              height: 30,
             ),
             Padding(
               padding: EdgeInsets.all(12),
               child: Text(
                 'TerraByte AgroSolution',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: Colors.white),
               ),
             ),
-
             Spacer(),
-            // permite colocar a foto do usuario logado por exemplo
             CircleAvatar(
               backgroundColor: Colors.brown[100],
               child: Icon(
@@ -56,7 +50,6 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
       ),
-      // corpo do Scaffold
       body: Column(
         children: [
           Padding(
@@ -69,11 +62,7 @@ class DashboardScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30))),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-
-          // Cria botoes em Card
+          SizedBox(height: 20),
           _DashboardButton(
               icon: Icons.analytics_outlined,
               label: 'Monitoramento',
@@ -83,10 +72,7 @@ class DashboardScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => ColetaDadosScreen()));
               }),
-
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           _DashboardButton(
               icon: Icons.settings_remote_outlined,
               label: 'Sistema de controle',
@@ -94,18 +80,16 @@ class DashboardScreen extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Telaacionamento()));
               }),
-
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           _DashboardButton(
-              icon: Icons.smart_toy_outlined, label: 'Chatbot', onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=>ChatScreen()));
+              icon: Icons.smart_toy_outlined,
+              label: 'Chatbot',
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => ChatScreen()));
               }),
         ],
       ),
-      // cria widget Botton Navigator
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         selectedItemColor: Colors.white,
@@ -119,23 +103,16 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-// Cria uma classe chamada DashboardButton
-
 class _DashboardButton extends StatelessWidget {
-  // Criando atributos para a classe
-
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-
-  // Criando construtor com passagem de parametros obrigatorios
 
   const _DashboardButton(
       {required this.icon, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    //  novo widget que permite tocar na tela
     return InkWell(
       onTap: onTap,
       child: Card(
@@ -150,9 +127,7 @@ class _DashboardButton extends StatelessWidget {
                 color: Color(0xFF6DBD29),
                 size: 40,
               ),
-              SizedBox(
-                width: 16,
-              ),
+              SizedBox(width: 16),
               Text(
                 label,
                 style: TextStyle(fontSize: 18, color: Color(0xFF6DBD29)),

@@ -1,0 +1,2 @@
+C:/Users/Usuario/Downloads/DesenvolvimentoMobile3Semestre/aula15/app_projint/android/app/.cxx/RelWithDebInfo/65s4c5m2/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Usuario/Downloads/DesenvolvimentoMobile3Semestre/aula15/app_projint/android/app/.cxx/RelWithDebInfo/65s4c5m2/arm64-v8a/CMakeFiles/rebuild_cache.dir
